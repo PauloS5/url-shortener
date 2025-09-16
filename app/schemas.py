@@ -12,9 +12,8 @@ class UrlCreate(UrlBase):
 class UrlRead(UrlBase):
     id: int = Field(
         title="ID",
-        description="Indenttificador único auto-incrementável")
+        description="Indentificador único da URL a ser buscada.")
     nick_url: str = Field(
-        default=None,
         title="URL de apelido",
         description="End-point que apontará para a URL relacionada.")
 
