@@ -11,8 +11,8 @@ def findByUrl(session: Session, url: str) -> Url:
     return
 
 def save(session: Session, url: str, nickurl) -> None:
-    new = Url(original_url=url, nick_url=nickurl)
-    session.add(new)
+    newurl = Url(original_url=url, nick_url=nickurl)
+    session.add(newurl)
     session.commit()
 
 def update(session: Session, id: int, newurl: str) -> None:
