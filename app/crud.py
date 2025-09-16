@@ -1,8 +1,10 @@
-from sqlmodel import Session
+from sqlmodel import Session, select
 from .models import Url
 
 def all(session: Session) -> list[Url]:
-    return
+    statement = select(Url)
+    results = session.exec(statement)
+    return results.all()
 
 def find(session: Session, id: int) -> Url:
     return
