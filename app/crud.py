@@ -15,7 +15,9 @@ def find(engine, id: int) -> Url:
 
 def findByUrl(engine, url: str) -> Url:
     with Session(engine) as session:
-        return
+        statement = select(Url).where(Url.nick_url == url).limit(1)
+        results = session.exec(statement)
+        return results.first()
 
 def save(engine, url: str, nickurl: str) -> None:
     with Session(engine) as session:
