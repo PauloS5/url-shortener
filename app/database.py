@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel, Session, create_engine
+from .models import Url
 
-DB_DRIVER = "mysql-pymysql"
+DB_DRIVER = "mysql+pymysql"
 DB_USER = "root"
 DB_PASSWORD = ""
 DB_HOST = "localhost"
