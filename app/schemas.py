@@ -1,16 +1,17 @@
 from sqlmodel import SQLModel, Field
 
 class UrlBase(SQLModel):
-    pass
+    original_url: str = Field(max_length=511)
 
 class UrlCreate(UrlBase):
     pass
 
 class UrlRead(UrlBase):
-    pass
+    id: int = Field()
+    nick_url: str = Field(default=None)
 
 class UrlUpdate(UrlBase):
-    pass
+    id: int
 
 class UrlDelete(UrlBase):
-    pass
+    id: int = Field()
