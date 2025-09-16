@@ -3,14 +3,14 @@ from sqlmodel import SQLModel, Field
 class UrlBase(SQLModel):
     pass
 
-class UrlCreate(SQLModel):
+class UrlCreate(UrlBase):
     pass
 
-class UrlRead(SQLModel):
+class UrlRead(UrlBase):
     pass
 
-class UrlUpdate(SQLModel):
+class UrlUpdate(UrlBase):
     pass
 
-class UrlDelete(SQLModel):
+class UrlDelete(UrlBase):
     pass
