@@ -8,6 +8,6 @@ def generate_random_string():
 
     return random_string
 
-def generate_url(end_point: str):
+def generate_url_to_redirect(end_point: str):
     BASE = "http://127.0.0.1:8000/redirect/"
     return BASE + end_point
