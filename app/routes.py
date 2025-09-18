@@ -12,5 +12,7 @@ async def list_urls(session: Session = Depends(get_session)) -> any:
     return all(session)
 
 @router.get("/url/{id}", response_model=UrlRead|None)
-async def get_url(session: Session = Depends(get_session), id: int = Path(title="Identificador Único", description="ID que seráusado para buscar uma url")):
+async def get_url(session: Session = Depends(get_session), id: int = Path(title="Identificador Único", description="ID que seráusado para buscar uma url")) -> any:
     return find(session, id)
+
+@router.post("/url/")
