@@ -1,47 +1,41 @@
 from sqlmodel import Session, select
 from .models import Url
 
-def all(engine) -> list[Url]:
-    with Session(engine) as session:
-        statement = select(Url)
-        results = session.exec(statement)
-        return results.all()
+def all(session: Session) -> list[Url]:
+    statement = select(Url)
+    results = session.exec(statement)
+    return results.all()
 
-def find(engine, id: int) -> Url:
-    with Session(engine) as session:
-        statement = select(Url).where(Url.id == id).limit(1)
-        results = session.exec(statement)
-        return results.first()
+def find(session: Session, id: int) -> Url:
+    statement = select(Url).where(Url.id == id).limit(1)
+    results = session.exec(statement)
+    return results.first()
 
-def findByUrl(engine, url: str) -> Url:
-    with Session(engine) as session:
-        statement = select(Url).where(Url.nick_url == url).limit(1)
-        results = session.exec(statement)
-        return results.first()
+def findByUrl(session: Session, url: str) -> Url:
+    statement = select(Url).where(Url.nick_url == url).limit(1)
+    results = session.exec(statement)
+    return results.first()
 
-def save(engine, url: str, nickurl: str) -> None:
-    with Session(engine) as session:
-        newurl = Url(original_url=url, nick_url=nickurl)
-        session.add(newurl)
+def save(session: Session, url: str, nickurl: str) -> None:
+    newurl = Url(original_url=url, nick_url=nickurl)
+    session.add(newurl)
+    session.commit()
+
+def update(session: Session, id: int, newurl: str) -> None:
+    statement = select(Url).where(Url.id == id)
+    result = session.exec(statement)
+    url = result.first()
+
+    if (url):
+        url.original_url = newurl
+        session.add(url)
         session.commit()
 
-def update(engine, id: int, newurl: str) -> None:
-    with Session(engine) as session:
-        statement = select(Url).where(Url.id == id)
-        result = session.exec(statement)
-        url = result.first()
+def delete(session: Session, id: int) -> None:
+    statement = select(Url).where(Url.id == id)
+    result = session.exec(statement)
+    url = result.first()
 
-        if (url):
-            url.original_url = newurl
-            session.add(url)
-            session.commit()
-
-def delete(engine, id: int) -> None:
-    with Session(engine) as session:
-        statement = select(Url).where(Url.id == id)
-        result = session.exec(statement)
-        url = result.first()
-
-        if (url):
-            session.delete(url)
-            session.commit()
+    if (url):
+        session.delete(url)
+        session.commit()
