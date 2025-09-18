@@ -33,8 +33,8 @@ def update(engine, id: int, newurl: str) -> None:
 
         if (url):
             url.original_url = newurl
+            session.add(url)
             session.commit()
 
 def delete(engine, id: int) -> None:
     with Session(engine) as session:
-        return
