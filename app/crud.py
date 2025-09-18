@@ -27,7 +27,13 @@ def save(engine, url: str, nickurl: str) -> None:
 
 def update(engine, id: int, newurl: str) -> None:
     with Session(engine) as session:
-        return
+        statement = select(Url).where(Url.id == id)
+        result = session.exec(statement)
+        url = result.first()
+
+        if (url):
+            url.original_url = newurl
+            session.commit()
 
 def delete(engine, id: int) -> None:
     with Session(engine) as session:
