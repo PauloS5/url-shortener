@@ -7,7 +7,15 @@ class UrlBase(SQLModel):
         max_length=511)
 
 class UrlCreate(UrlBase):
-    pass
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "original_url": "https://example.com"
+                }
+            ]
+        }
+    }
 
 class UrlRead(UrlBase):
     id: int = Field(
@@ -16,13 +24,44 @@ class UrlRead(UrlBase):
     nick_url: str = Field(
         title="URL de apelido",
         description="End-point que apontará para a URL relacionada.")
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "original_url": "https://example.com",
+                    "id": "1",
+                    "nick_url": "ex"
+                }
+            ]
+        }
+    }
 
 class UrlUpdate(UrlBase):
     id: int = Field(
         title="ID",
         description="Identificador único que aponta para o registro a ser atualizado.")
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "original_url": "https://example.com",
+                    "id": 10
+                }
+            ]
+        }
+    }
 
 class UrlDelete(UrlBase):
     id: int = Field(
         title="ID",
         description="Identificador único que aponta para o registro a ser excluído.")
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "original_url": "https://example.com",
+                    "id": 1
+                }
+            ]
+        }
+    }
