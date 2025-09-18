@@ -7,3 +7,7 @@ def generate_random_string():
     random_string = ''.join(random.choice(chars) for _ in range(TAM))
 
     return random_string
+
+def generate_url(end_point: str):
+    BASE = "http://127.0.0.1:8000/redirect/"
+    return BASE + end_point
