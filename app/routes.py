@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Path, Depends
+from fastapi import APIRouter, Path, Body, Depends
 from sqlmodel import Session
 
 from .database import get_session
 from .crud import *
-from .schemas import UrlRead 
+from .schemas import *
+from .helpers import *
 
 router = APIRouter()
 
@@ -15,4 +16,11 @@ async def list_urls(session: Session = Depends(get_session)) -> any:
 async def get_url(session: Session = Depends(get_session), id: int = Path(title="Identificador Único", description="ID que seráusado para buscar uma url")) -> any:
     return find(session, id)
 
-@router.post("/url/")
+@router.post("/url/", response_model=None)
+async def register_url(session: Session = Depends(get_session), newurl: UrlCreate = Body(embed=True, title="URL", description="URL que será cadastrada no banco de dados")):
+    endpoint_nickurl = generate_random_string()
+
+    while findByNick(endpoint_nickurl) != None:
+        endpoint_nickurl = generate_random_string()
+        
+    save(session, url=newurl.original_url, nickurl=endpoint_nickurl)
