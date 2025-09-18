@@ -11,8 +11,8 @@ def find(session: Session, id: int) -> Url:
     results = session.exec(statement)
     return results.first()
 
-def findByUrl(session: Session, url: str) -> Url:
-    statement = select(Url).where(Url.nick_url == url).limit(1)
+def findByNick(session: Session, nick: str) -> Url:
+    statement = select(Url).where(Url.nick_url == nick).limit(1)
     results = session.exec(statement)
     return results.first()
 
