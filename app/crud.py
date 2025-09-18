@@ -38,3 +38,10 @@ def update(engine, id: int, newurl: str) -> None:
 
 def delete(engine, id: int) -> None:
     with Session(engine) as session:
+        statement = select(Url).where(Url.id == id)
+        result = session.exec(statement)
+        url = result.first()
+
+        if (url):
+            session.delete(url)
+            session.commit()
