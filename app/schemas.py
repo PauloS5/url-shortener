@@ -3,7 +3,7 @@ from sqlmodel import SQLModel, Field
 class UrlBase(SQLModel):
     url: str = Field(
         title="URL original",
-        description="URL na quala API redirecionará.",
+        description="URL na qual a API redirecionará.",
         max_length=511)
 
 class UrlCreate(UrlBase):
@@ -28,9 +28,9 @@ class UrlRead(UrlBase):
         "json_schema_extra": {
             "examples": [
                 {
-                    "url": "https://example.com",
                     "id": "1",
-                    "nick_url": "ex"
+                    "url": "https://example.com",
+                    "nick_url": "ex3pl0"
                 }
             ]
         }
@@ -44,8 +44,8 @@ class UrlUpdate(UrlBase):
         "json_schema_extra": {
             "examples": [
                 {
-                    "url": "https://example.com",
-                    "id": 10
+                    "id": 10,
+                    "url": "https://example.com"
                 }
             ]
         }
@@ -59,8 +59,8 @@ class UrlDelete(UrlBase):
         "json_schema_extra": {
             "examples": [
                 {
-                    "url": "https://example.com",
-                    "id": 1
+                    "id": 1,
+                    "url": "https://example.com"
                 }
             ]
         }
