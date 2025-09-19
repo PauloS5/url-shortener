@@ -19,15 +19,15 @@ async def get_url(session: Session = Depends(get_session), id: int = Path(title=
 @router.post("/url/", response_model=None)
 async def register_url(session: Session = Depends(get_session), url_to_register: UrlCreate = Body(embed=True, title="URL", description="URL que será cadastrada no banco de dados")):
     endpoint_nickurl = generate_random_string()
-
     while find_url_by_nick(session, endpoint_nickurl) != None:
         endpoint_nickurl = generate_random_string()
         
-    save_url(session, newurl=url_to_register.url, nickurl=endpoint_nickurl)
+    save_url(session, url_data=Url(url=url_to_register.url, nick_url=endpoint_nickurl))
 
 @router.put("/url/", response_model=None)
 async def update_url(session: Session = Depends(get_session), url_to_update: UrlUpdate = Body(embed=True, title="Nova URL", description="URL que substituirá a antiga")) -> any:
-    update_url(session, url_to_update.id, url_to_update.url)
+    url = find_url(session, url_to_update.id)
+    save_url(session, url)
 
 @router.delete("/url/{id}", response_model=None)    
 async def delete_url(session: Session = Depends(get_session), id: int = Path(title="Identificador Único", description="ID do elemento que será excluído")) -> any:
