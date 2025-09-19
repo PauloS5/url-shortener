@@ -27,7 +27,7 @@ def update(session: Session, id: int, newurl: str) -> None:
     url = result.first()
 
     if (url):
-        url.original_url = newurl
+        url.url = newurl
         session.add(url)
         session.commit()
 
