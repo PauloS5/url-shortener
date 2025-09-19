@@ -24,3 +24,7 @@ async def register_url(session: Session = Depends(get_session), newurl: UrlCreat
         endpoint_nickurl = generate_random_string()
         
     save(session, url=newurl.original_url, nickurl=endpoint_nickurl)
+
+@router.put("/url/", response_model=None)
+async def update_url(session: Session = Depends(get_session), newurl: UrlUpdate = Body(embed=True, title="Nova URL", description="URL que substituirá a antiga")) -> any:
+    
