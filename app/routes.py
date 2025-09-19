@@ -27,18 +27,8 @@ async def register_url(session: Session = Depends(get_session), url_to_register:
 
 @router.put("/url/", response_model=None)
 async def update_url(session: Session = Depends(get_session), url_to_update: UrlUpdate = Body(embed=True, title="Nova URL", description="URL que substituirá a antiga")) -> any:
-    statement = select(Url).where(Url.id == url_to_update.id)
-    result = session.exec(statement)
-    if (result):
-        url = result.first()
-        url.url = url_to_update.url
-        session.commit(url)
+    update(session, url_to_update.id, url_to_update.url)
 
-@router.delete("/url/", response_model=None)
-async def delete_url(session: Session = Depends(get_url), url_to_delete: UrlDelete = Body(embed=True)) -> any:
-    statement = select(Url).where(Url.id == url_to_delete.id)
-    result = session.exec(statement)
-    if result:
-        url = result.first()
-        session.delete(url)
-        session.commit()
+@router.delete("/url/", response_model=None)    
+async def delete_url(session: Session = Depends(get_url), id: int = Body(title="Identificador Único", description="ID do elemento que será excluído")) -> any:
+    delete(session, id)
