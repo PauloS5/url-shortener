@@ -29,6 +29,6 @@ async def register_url(session: Session = Depends(get_session), url_to_register:
 async def update_url(session: Session = Depends(get_session), url_to_update: UrlUpdate = Body(embed=True, title="Nova URL", description="URL que substituirá a antiga")) -> any:
     update(session, url_to_update.id, url_to_update.url)
 
-@router.delete("/url/", response_model=None)    
-async def delete_url(session: Session = Depends(get_url), id: int = Body(title="Identificador Único", description="ID do elemento que será excluído")) -> any:
+@router.delete("/url/{id}", response_model=None)    
+async def delete_url(session: Session = Depends(get_session), id: int = Path(title="Identificador Único", description="ID do elemento que será excluído")) -> any:
     delete(session, id)
