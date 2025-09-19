@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.get("/url/", response_model=list[UrlRead])
 async def list_all_urls(session: Session = Depends(get_session)) -> any:
-    return all_urls(session)
+    return all_url(session)
 
 @router.get("/url/{id}", response_model=UrlRead|None)
 async def get_url(session: Session = Depends(get_session), id: int = Path(title="Identificador Único", description="ID que seráusado para buscar uma url")) -> any:
