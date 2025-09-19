@@ -16,26 +16,15 @@ def find_url_by_nick(session: Session, nick: str) -> Url:
     results = session.exec(statement)
     return results.first()
 
-def save_url(session: Session, newurl: str, nickurl: str) -> None:
-    newurl = Url(url=newurl, nick_url=nickurl)
-    session.add(newurl)
+def save_url(session: Session, url_data: Url) -> None:
+    session.add(url_data)
     session.commit()
 
-def update_url(session: Session, id: int, newurl: str) -> None:
-    statement = select(Url).where(Url.id == id)
-    result = session.exec(statement)
-    url = result.first()
+def update_url(session: Session, url_data: Url, newurl: str) -> None:
+    url_data.url = newurl
+    session.add(url_data)
+    session.commit()
 
-    if (url):
-        url.url = newurl
-        session.add(url)
-        session.commit()
-
-def delete_url(session: Session, id: int) -> None:
-    statement = select(Url).where(Url.id == id)
-    result = session.exec(statement)
-    url = result.first()
-
-    if (url):
-        session.delete(url)
-        session.commit()
+def delete_url(session: Session, url_data: Url) -> None:
+    session.delete(url_data)
+    session.commit()
