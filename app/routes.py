@@ -17,19 +17,23 @@ async def get_url(session: Session = Depends(get_session), id: int = Path(title=
     return find(session, id)
 
 @router.post("/url/", response_model=None)
-async def register_url(session: Session = Depends(get_session), newurl: UrlCreate = Body(embed=True, title="URL", description="URL que será cadastrada no banco de dados")):
+async def register_url(session: Session = Depends(get_session), url_to_register: UrlCreate = Body(embed=True, title="URL", description="URL que será cadastrada no banco de dados")):
     endpoint_nickurl = generate_random_string()
 
     while findByNick(endpoint_nickurl) != None:
         endpoint_nickurl = generate_random_string()
         
-    save(session, url=newurl.original_url, nickurl=endpoint_nickurl)
+    save(session, url=url_to_register.original_url, nickurl=endpoint_nickurl)
 
 @router.put("/url/", response_model=None)
-async def update_url(session: Session = Depends(get_session), newurl: UrlUpdate = Body(embed=True, title="Nova URL", description="URL que substituirá a antiga")) -> any:
-    statement = select(Url).where(Url.id == newurl.id)
+async def update_url(session: Session = Depends(get_session), url_to_update: UrlUpdate = Body(embed=True, title="Nova URL", description="URL que substituirá a antiga")) -> any:
+    statement = select(Url).where(Url.id == url_to_update.id)
     result = session.exec(statement)
     if (result):
         url = result.first()
-        url.url = newurl.url
+        url.url = url_to_update.url
         session.commit(url)
+
+@router.delete("/url/", response_model=None)
+async def delete_url(session: Session = Depends(get_url), url_to_delete: UrlDelete = Body(embed=True)):
+    pass
