@@ -16,8 +16,8 @@ def findByNick(session: Session, nick: str) -> Url:
     results = session.exec(statement)
     return results.first()
 
-def save(session: Session, url: str, nickurl: str) -> None:
-    newurl = Url(original_url=url, nick_url=nickurl)
+def save(session: Session, newurl: str, nickurl: str) -> None:
+    newurl = Url(url=newurl, nick_url=nickurl)
     session.add(newurl)
     session.commit()
 
