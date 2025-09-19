@@ -27,4 +27,9 @@ async def register_url(session: Session = Depends(get_session), newurl: UrlCreat
 
 @router.put("/url/", response_model=None)
 async def update_url(session: Session = Depends(get_session), newurl: UrlUpdate = Body(embed=True, title="Nova URL", description="URL que substituirá a antiga")) -> any:
-    
+    statement = select(Url).where(Url.id == newurl.id)
+    result = session.exec(statement)
+    if (result):
+        url = result.first()
+        url.url = newurl.url
+        session.commit(url)
