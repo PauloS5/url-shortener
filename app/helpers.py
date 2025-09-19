@@ -2,7 +2,7 @@ import string
 import random
 
 def generate_random_string():
-    TAM = 10
+    TAM = 6
     chars = string.ascii_letters + string.digits + "-_"
     random_string = ''.join(random.choice(chars) for _ in range(TAM))
 
