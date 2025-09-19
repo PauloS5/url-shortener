@@ -36,4 +36,9 @@ async def update_url(session: Session = Depends(get_session), url_to_update: Url
 
 @router.delete("/url/", response_model=None)
 async def delete_url(session: Session = Depends(get_url), url_to_delete: UrlDelete = Body(embed=True)):
-    pass
+    statement = select(Url).where(Url.id == url_to_delete.id)
+    result = session.exec(statement)
+    if result:
+        url = result.first()
+        session.delete(url)
+        session.commit()
