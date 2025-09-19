@@ -1,7 +1,7 @@
 from sqlmodel import Session, select
 from .models import Url
 
-def all_urls(session: Session) -> list[Url]:
+def all_url(session: Session) -> list[Url]:
     statement = select(Url)
     results = session.exec(statement)
     return results.all()
